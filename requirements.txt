@@ -1,0 +1,13 @@
+streamlit
+langchain
+langchain-community
+langchain-core
+langchain-text-splitters
+langchain-google-genai
+chromadb
+pypdf
+tiktoken
+firebase-admin
+python-dotenv
+sentence-transformers
+torch
