@@ -1,57 +1,40 @@
-# Environment Setup Guide
+# Gemini RAG Chatbot
 
-## Setting up your API key
+A **Retrieval-Augmented Generation (RAG)** app that answers questions from your own documents, built with **Gemini 2.5 Flash**, **LangChain** and **ChromaDB**.
 
-1. **Create a `.env` file** in the project root directory (same folder as `app.py`)
+## Features
+* **Document upload**: Index PDF and TXT files.
+* **Token-based chunking**: Uses `TokenTextSplitter` (512 tokens, 50 overlap).
+* **MMR retrieval**: Maximum Marginal Relevance returns passages that are both relevant and varied.
+* **Source citations**: Shows the source filename and page number with answers.
+* **Flexible embeddings**:
+  * Local: HuggingFace `all-mpnet-base-v2` (free, runs on CPU).
+  * Cloud: Google Generative AI embeddings.
+* **Chat history**: Stores per-user chat history through Firebase.
 
-2. **Add your Google API key** to the `.env` file:
+## Tech Stack
+* Frontend: Streamlit
+* Orchestration: LangChain
+* LLM: Gemini 2.5 Flash
+* Vector store: ChromaDB
+
+## Getting Started
+
+1. Use the project virtual environment instead of the system Python. The app was verified against the workspace venv at `myenv`.
+   ```powershell
+   cd C:\knowledge_base
+   .\myenv\Scripts\Activate.ps1
+   python -m pip install -r requirements.txt
    ```
-   GOOGLE_API_KEY=your_actual_api_key_here
-   USE_LOCAL_EMBEDDINGS=true
+
+2. Create a `.env` file:
+   ```env
+   GOOGLE_API_KEY=your_key_here
+   USE_LOCAL_EMBEDDINGS=false
    ```
 
-3. **Get your API key** from: https://makersuite.google.com/app/apikey
-
-## Embedding Options
-
-### Local Embeddings (Recommended - No Quota Limits)
-By default, the app uses **local HuggingFace embeddings** which:
-- ✅ **No quota limits** - works completely free
-- ✅ **Works offline** - no API calls needed
-- ✅ **Fast and reliable** - runs on your machine
-- ✅ **No billing concerns**
-
-To use local embeddings (default), add to your `.env`:
-```
-USE_LOCAL_EMBEDDINGS=true
-```
-
-### Google Embeddings (Requires API Quota)
-If you want to use Google's embedding API instead:
-- ⚠️ **Has quota limits** on free tier
-- ⚠️ **Requires API calls** - needs internet
-- ⚠️ **May hit rate limits** on free tier
-
-To use Google embeddings, add to your `.env`:
-```
-USE_LOCAL_EMBEDDINGS=false
-```
-
-**Note:** Even with local embeddings, you still need `GOOGLE_API_KEY` for the LLM (Gemini) to generate responses.
-
-## Important Notes
-
-- The `.env` file is already added to `.gitignore` so it won't be committed to git
-- Never share your API key publicly
-- The `.env` file will be automatically loaded when you run the app
-
-## Example `.env` file content:
-
-```
-GOOGLE_API_KEY=AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-USE_LOCAL_EMBEDDINGS=true
-```
-
-Replace `AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX` with your actual API key.
-
-
+3. Run the app from the same venv:
+   ```powershell
+   cd C:\knowledge_base
+   .\myenv\Scripts\python.exe -m streamlit run app.py
+   ```
